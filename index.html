@@ -9,15 +9,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --dark:    #0b0d0c;
-    --green:   #1a6b4a;
-    --green-l: #238c5e;
-    --green-d: #124a33;
-    --cream:   #f5f2ed;
-    --gray:    #8a8a82;
-    --gray-l:  #b5b5ad;
-    --border:  #1e2120;
-    --card:    #111413;
+    --dark:    #0a0d14;
+    --green:   #d4a24a;
+    --green-l: #d4a24a;
+    --green-d: #a67c2e;
+    --cream:   #e8ecf2;
+    --gray:    #546580;
+    --gray-l:  #8a9bb4;
+    --border:  #1c2535;
+    --card:    #10141c;
+    --accent:  #3da0c7;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -41,7 +42,7 @@
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     padding: 0 1.5rem; height: 60px;
     display: flex; justify-content: space-between; align-items: center;
-    background: rgba(11,13,12,0.95);
+    background: rgba(10,13,20,0.95);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
   }
@@ -56,7 +57,7 @@
     font-size: 0.78rem; color: var(--gray-l); text-decoration: none;
     letter-spacing: 0.04em; transition: color 0.2s;
   }
-  .nav-links a:hover { color: var(--green-l); }
+  .nav-links a:hover { color: var(--accent); }
   .nav-cta {
     font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
     color: var(--green-l); border: 1px solid var(--green-d);
@@ -78,7 +79,7 @@
   /* mobile menu */
   .mob-menu {
     position: fixed; inset: 0; z-index: 99;
-    background: rgba(11,13,12,0.98);
+    background: rgba(10,13,20,0.98);
     display: flex; flex-direction: column; justify-content: center; align-items: center;
     gap: 1.5rem; opacity: 0; pointer-events: none; transition: opacity 0.3s;
   }
@@ -88,7 +89,7 @@
     font-size: 2rem; font-weight: 500; color: var(--cream);
     text-decoration: none; transition: color 0.2s;
   }
-  .mob-menu a:hover { color: var(--green-l); }
+  .mob-menu a:hover { color: var(--accent); }
 
   /* ─── LAYOUT ─── */
   .section { padding: 5rem 1.5rem; }
@@ -96,7 +97,7 @@
   .wrap { max-width: 960px; margin: 0 auto; }
   .label {
     font-size: 0.64rem; letter-spacing: 0.3em; text-transform: uppercase;
-    color: var(--green-l); margin-bottom: 1.5rem;
+    color: var(--accent); margin-bottom: 1.5rem;
   }
   .divider { height: 1px; background: var(--border); }
 
@@ -135,7 +136,7 @@
   .vm-block {}
   .vm-title {
     font-size: 0.64rem; letter-spacing: 0.3em; text-transform: uppercase;
-    color: var(--green-l); margin-bottom: 0.8rem;
+    color: var(--accent); margin-bottom: 0.8rem;
   }
   .vm-text {
     font-size: 0.95rem; color: var(--gray-l); line-height: 1.8;
@@ -172,10 +173,10 @@
   }
   .svc-card::before {
     content: ''; position: absolute; top: 0; left: 0;
-    width: 0; height: 2px; background: var(--green-l);
+    width: 0; height: 2px; background: var(--accent);
     transition: width 0.35s;
   }
-  .svc-card:hover { background: #151917; }
+  .svc-card:hover { background: #141921; }
   .svc-card:hover::before { width: 100%; }
   .svc-num {
     font-family: 'Cormorant Garamond', serif;
@@ -213,7 +214,7 @@
     flex-shrink: 0; width: 28px; height: 28px;
     border: 1px solid var(--border); display: flex;
     align-items: center; justify-content: center;
-    color: var(--green-l); font-size: 1.1rem; transition: transform 0.3s;
+    color: var(--accent); font-size: 1.1rem; transition: transform 0.3s;
   }
   .faq-item.open .faq-toggle { transform: rotate(45deg); }
   .faq-a {
@@ -236,7 +237,7 @@
     font-weight: 500; line-height: 1.15; color: var(--cream);
     margin-bottom: 1rem; text-align: center;
   }
-  .cta-heading em { font-style: italic; color: var(--green-l); }
+  .cta-heading em { font-style: italic; color: var(--green); }
   .cta-sub {
     text-align: center; color: var(--gray); font-size: 0.9rem;
     margin-bottom: 3rem;
@@ -255,7 +256,7 @@
     outline: none; transition: border-color 0.2s; width: 100%;
   }
   .form-input::placeholder { color: var(--gray); }
-  .form-input:focus { border-color: var(--green); }
+  .form-input:focus { border-color: var(--accent); }
   .form-input option { background: var(--dark); color: var(--cream); }
   .form-textarea { min-height: 110px; resize: vertical; }
   .form-btn {
@@ -267,7 +268,7 @@
   }
   .form-btn:hover { background: var(--green-l); }
   .form-success {
-    display: none; color: var(--green-l);
+    display: none; color: var(--green);
     font-size: 0.88rem; padding: 1rem 0;
   }
 
