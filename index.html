@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BPR Consulting — Less complexity. More impact.</title>
+<meta name="description" content="BPR Consulting — Fractional operations, recruitment, and AI-enabled consulting for startups and SMEs across Benelux, Nordics, UK & Middle East.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◆</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ─── VARIABLES ─── */
+  :root {
+    --bg:        #0a0f0d;
+    --bg-2:      #0f1710;
+    --bg-3:      #141f17;
+    --card:      #111a14;
+    --border:    #1e3028;
+    --border-lt: #2a4035;
+
+    --cream:     #e8f0eb;
+    --body-dk:   #9dbfb0;
+    --muted-dk:  #557a6a;
+
+    --teal:      #2ec4a0;
+    --teal-dk:   #1a7a62;
+    --teal-btn:  #134f3e;
+
+    --ink:       #0c1a14;
+    --body-lt:   #2e5040;
+  }
+
+  /* ─── RESET ─── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 3rem; height: 64px;
+    background: rgba(10,15,13,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Jost', sans-serif; font-weight: 500;
+    letter-spacing: 0.3em; font-size: 0.78rem;
+    text-transform: uppercase; color: var(--cream); text-decoration: none;
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 0.2rem;
+    position: absolute; left: 50%; transform: translateX(-50%);
+  }
+  .nav-links a {
+    font-size: 0.76rem; font-weight: 400;
+    letter-spacing: 0.06em; color: rgba(232,240,235,0.7);
+    text-decoration: none; padding: 0.5rem 1rem;
+    transition: color 0.2s; white-space: nowrap;
+  }
+  .nav-links a:hover { color: var(--teal); }
+  .nav-links .sep { color: var(--border-lt); font-size: 0.7rem; pointer-events: none; padding: 0; }
+  .nav-right { display: flex; align-items: center; }
+  .nav-cta {
+    border: 1px solid var(--teal-dk); color: var(--teal);
+    padding: 0.55rem 1.4rem; background: transparent;
+    font-family: 'Jost', sans-serif; font-size: 0.7rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .nav-cta:hover { background: var(--teal-btn); }
+
+  /* hamburger */
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    width: 28px; cursor: pointer; padding: 4px; background: none; border: none;
+    margin-left: 1.2rem;
+  }
+  .hamburger span { display: block; height: 1.5px; background: var(--cream); transition: all 0.3s; }
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* mobile menu */
+  .menu-overlay {
+    position: fixed; inset: 0; z-index: 150;
+    background: rgba(10,15,13,0.98); backdrop-filter: blur(20px);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .menu-overlay.open { opacity: 1; pointer-events: all; }
+  .menu-list { display: flex; flex-direction: column; gap: 0.3rem; text-align: center; }
+  .menu-list a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 6vw, 3.5rem); font-weight: 500;
+    color: var(--cream); text-decoration: none;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.35s, transform 0.35s, color 0.2s;
+    padding: 0.3rem 0;
+  }
+  .menu-overlay.open .menu-list a { opacity: 1; transform: translateY(0); }
+  .menu-list a:nth-child(1) { transition-delay: 0.05s; }
+  .menu-list a:nth-child(2) { transition-delay: 0.1s; }
+  .menu-list a:nth-child(3) { transition-delay: 0.15s; }
+  .menu-list a:nth-child(4) { transition-delay: 0.2s; }
+  .menu-list a:nth-child(5) { transition-delay: 0.25s; }
+  .menu-list a:nth-child(6) { transition-delay: 0.3s; }
+  .menu-list a:hover { color: var(--teal); }
+  .menu-divider { width: 40px; height: 1px; background: var(--border); margin: 2rem auto; }
+  .menu-cta-wrap { opacity: 0; transition: opacity 0.4s 0.3s; }
+  .menu-overlay.open .menu-cta-wrap { opacity: 1; }
+
+  /* ─── COMMON ─── */
+  .wrap { max-width: 1200px; margin: 0 auto; }
+  .pad { padding: 7rem 3rem; }
+  .s-label {
+    font-size: 0.66rem; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 2.5rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .s-label::before { content: ''; width: 26px; height: 1px; background: var(--teal); flex-shrink: 0; }
+  .h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 3.5vw, 4rem);
+    font-weight: 500; line-height: 1.15; color: var(--cream); margin-bottom: 1.8rem;
+  }
+  .h2 em { font-style: italic; color: var(--teal); }
+  .body { font-size: 0.92rem; color: var(--body-dk); line-height: 1.9; margin-bottom: 1.2rem; }
+  .body strong { color: var(--cream); font-weight: 400; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+
+  /* Buttons */
+  .btn-primary {
+    background: var(--teal-btn); border: 1px solid var(--teal-dk);
+    color: var(--teal); padding: 1rem 2.4rem;
+    font-family: 'Jost', sans-serif; font-size: 0.76rem; font-weight: 400;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; transition: all 0.25s; display: inline-block;
+  }
+  .btn-primary:hover { background: var(--teal-dk); }
+  .btn-ghost {
+    color: var(--muted-dk); font-size: 0.76rem; letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; border-bottom: 1px solid var(--border-lt);
+    padding-bottom: 3px; transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--cream); border-color: var(--muted-dk); }
+  .btn-outline {
+    border: 1.5px solid var(--teal); color: var(--teal);
+    padding: 1.1rem 3rem; background: transparent;
+    font-family: 'Jost', sans-serif; font-size: 0.76rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    text-decoration: none; transition: all 0.25s; display: inline-block;
+  }
+  .btn-outline:hover { background: var(--teal); color: var(--bg); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 9rem 3rem 5rem; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 55% at 72% 48%, rgba(20,100,75,0.18) 0%, transparent 62%),
+      radial-gradient(ellipse 35% 40% at 15% 65%, rgba(10,60,44,0.12) 0%, transparent 55%);
+  }
+  .hero-grid {
+    display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 5rem;
+    max-width: 1200px; margin: 0 auto; width: 100%;
+    align-items: center; position: relative; z-index: 1;
+  }
+  .hero-kicker {
+    font-size: 0.68rem; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 0.8rem;
+    opacity: 0; animation: fadeUp 0.7s 0.1s ease forwards;
+  }
+  .hero-kicker::before { content: ''; width: 28px; height: 1px; background: var(--teal); }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.6rem, 6vw, 6.5rem);
+    font-weight: 500; line-height: 1.05; color: var(--cream); margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp 0.7s 0.2s ease forwards;
+  }
+  .hero h1 em { font-style: italic; color: var(--teal); display: block; }
+  .hero-lead {
+    font-size: 1.05rem; font-weight: 400; color: var(--cream);
+    margin-bottom: 0.8rem; line-height: 1.6;
+    opacity: 0; animation: fadeUp 0.7s 0.35s ease forwards;
+  }
+  .hero-sub {
+    font-size: 0.92rem; color: var(--body-dk); line-height: 1.85;
+    max-width: 460px; margin-bottom: 3rem;
+    opacity: 0; animation: fadeUp 0.7s 0.45s ease forwards;
+  }
+  .hero-actions {
+    display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.7s 0.55s ease forwards;
+  }
+
+  /* stats column */
+  .stats-col { display: flex; flex-direction: column; gap: 1px; }
+  .stat-card {
+    border: 1px solid var(--border-lt); padding: 2rem 2.2rem;
+    background: var(--card);
+    opacity: 0; transform: translateX(20px); animation: fadeInRight 0.6s ease forwards;
+    position: relative; overflow: hidden; transition: border-color 0.3s, background 0.3s;
+  }
+  .stat-card::before {
+    content: ''; position: absolute; left: 0; top: 0;
+    width: 2px; height: 0; background: var(--teal); transition: height 0.35s;
+  }
+  .stat-card:hover { border-color: var(--teal); background: var(--bg-3); }
+  .stat-card:hover::before { height: 100%; }
+  .stat-card:nth-child(1) { animation-delay: 0.3s; }
+  .stat-card:nth-child(2) { animation-delay: 0.45s; }
+  .stat-card:nth-child(3) { animation-delay: 0.6s; }
+  .stat-n {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; font-weight: 500; color: var(--teal); line-height: 1; margin-bottom: 0.4rem;
+  }
+  .stat-l { font-size: 0.7rem; color: var(--muted-dk); letter-spacing: 0.12em; text-transform: uppercase; }
+
+  /* ─── MARQUEE ─── */
+  .marquee-wrap {
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    padding: 0.9rem 0; overflow: hidden; background: var(--bg-2);
+  }
+  .marquee-track {
+    display: inline-flex; animation: marquee 45s linear infinite; white-space: nowrap;
+  }
+  .marquee-track span {
+    font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted-dk); padding: 0 1.4rem;
+  }
+  .marquee-track span.hi { color: var(--teal); }
+
+  /* ─── ABOUT ─── */
+  .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
+  .tag {
+    border: 1px solid var(--border-lt); color: var(--muted-dk);
+    padding: 0.38rem 0.9rem; font-size: 0.67rem; letter-spacing: 0.1em; text-transform: uppercase;
+    transition: all 0.2s;
+  }
+  .tag:hover { border-color: var(--teal); color: var(--teal); }
+  .about-card {
+    border: 1px solid var(--border-lt); background: var(--bg-3); padding: 3rem;
+    position: relative; overflow: hidden;
+  }
+  .about-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 1px; background: linear-gradient(to right, var(--teal), transparent);
+  }
+  .about-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 500; font-style: italic;
+    color: var(--cream); line-height: 1.55; margin-bottom: 1.8rem;
+  }
+  .regions { display: flex; flex-direction: column; gap: 0.7rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+  .region { display: flex; align-items: center; gap: 0.9rem; font-size: 0.82rem; color: var(--body-dk); }
+  .region::before { content: ''; width: 6px; height: 6px; background: var(--teal); border-radius: 50%; flex-shrink: 0; }
+
+  /* ─── WHY ─── */
+  .why-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
+  .why-item {
+    background: var(--bg-3); padding: 1.4rem 2rem;
+    display: flex; align-items: flex-start; gap: 1.2rem;
+    transition: background 0.2s; position: relative;
+  }
+  .why-item::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px; background: transparent; transition: background 0.25s;
+  }
+  .why-item:hover { background: var(--card); }
+  .why-item:hover::before { background: var(--teal); }
+  .why-dash { color: var(--teal); flex-shrink: 0; font-size: 0.9rem; margin-top: 2px; }
+  .why-text { font-size: 0.9rem; color: var(--cream); line-height: 1.6; font-weight: 400; }
+  .why-text span { color: var(--muted-dk); font-weight: 300; }
+  .why-footer {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem; font-style: italic; color: var(--teal);
+    margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border);
+  }
+
+  /* ─── WHO IT'S FOR ─── */
+  .for-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); margin-top: 3.5rem; }
+  .for-card {
+    background: var(--bg-3); padding: 3rem 2.5rem;
+    position: relative; overflow: hidden; transition: background 0.25s;
+  }
+  .for-card::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 1px; background: transparent; transition: background 0.3s;
+  }
+  .for-card:hover::after { background: var(--teal); }
+  .for-type { font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 1.2rem; }
+  .for-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.1rem; font-weight: 500; color: var(--cream); line-height: 1.2; margin-bottom: 1.2rem;
+  }
+  .for-desc { font-size: 0.86rem; color: var(--body-dk); line-height: 1.8; }
+  .for-badge {
+    display: inline-block; margin-top: 1.8rem;
+    border: 1px solid var(--teal-dk); color: var(--teal);
+    padding: 0.4rem 1rem; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  /* ─── PROBLEM ─── */
+  .prob-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); margin-top: 3.5rem; }
+  .prob-card {
+    background: var(--bg-2); padding: 3rem 2.2rem;
+    position: relative; overflow: hidden; transition: background 0.25s;
+  }
+  .prob-card::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 2px; background: transparent; transition: background 0.3s;
+  }
+  .prob-card:hover { background: var(--bg-3); }
+  .prob-card:hover::after { background: var(--teal); }
+  .prob-num { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted-dk); margin-bottom: 1.2rem; }
+  .prob-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 500; color: var(--cream); line-height: 1.2; margin-bottom: 1rem;
+  }
+  .prob-desc { font-size: 0.85rem; color: var(--body-dk); line-height: 1.8; }
+
+  /* ─── SERVICES ─── */
+  .svc-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); margin-top: 3.5rem; }
+  .svc-card {
+    background: var(--bg-2); padding: 2.8rem 2rem;
+    position: relative; overflow: hidden; transition: background 0.25s;
+  }
+  .svc-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 1px; background: var(--teal); transition: width 0.35s;
+  }
+  .svc-card:hover { background: var(--bg-3); }
+  .svc-card:hover::after { width: 100%; }
+  .svc-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; font-weight: 500; color: var(--border-lt); line-height: 1; margin-bottom: 1.6rem;
+  }
+  .svc-title { font-size: 0.76rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cream); margin-bottom: 1rem; }
+  .svc-desc { font-size: 0.85rem; color: var(--body-dk); line-height: 1.8; }
+
+  /* ─── HOW IT WORKS ─── */
+  .how-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); margin-top: 3.5rem; }
+  .how-card {
+    background: var(--card); padding: 3rem 2.2rem;
+    position: relative; transition: background 0.25s;
+  }
+  .how-card:hover { background: var(--bg-3); }
+  .how-step {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem; font-weight: 500; color: var(--border-lt);
+    line-height: 1; margin-bottom: 1.5rem;
+  }
+  .how-title { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream); margin-bottom: 1rem; }
+  .how-desc { font-size: 0.86rem; color: var(--body-dk); line-height: 1.8; }
+  .how-tag { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.5rem; font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); }
+  .how-tag::before { content: ''; width: 16px; height: 1px; background: var(--teal); }
+  .contract-row { display: flex; gap: 1px; background: var(--border); margin-top: 1px; }
+  .contract-pill {
+    flex: 1; background: var(--bg-3); padding: 1.3rem 1.5rem;
+    text-align: center; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted-dk); transition: all 0.2s;
+  }
+  .contract-pill:hover { background: var(--bg-2); color: var(--teal); }
+  .tz-banner {
+    background: var(--bg-3); border: 1px solid var(--border-lt);
+    padding: 1.8rem 2.5rem; margin-top: 2rem;
+    display: flex; align-items: center; gap: 1.5rem;
+  }
+  .tz-icon { font-size: 1.2rem; flex-shrink: 0; }
+  .tz-text { font-size: 0.86rem; color: var(--body-dk); line-height: 1.6; }
+  .tz-text strong { color: var(--cream); font-weight: 400; }
+
+  /* ─── CONTACT / CTA ─── */
+  .cta-band {
+    padding: 8rem 3rem; text-align: center;
+    background: var(--bg-2); position: relative; overflow: hidden;
+    border-top: 1px solid var(--border);
+  }
+  .cta-band::before {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 700px; height: 400px;
+    background: radial-gradient(ellipse, rgba(20,100,75,0.2) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .cta-h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 4.5vw, 5.2rem);
+    font-weight: 500; color: var(--cream); line-height: 1.1;
+    margin-bottom: 1rem; position: relative; z-index: 1;
+  }
+  .cta-h2 em { font-style: italic; color: var(--teal); }
+
+  /* contact form */
+  .contact-form { display: flex; flex-direction: column; gap: 1.2rem; text-align: left; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+  .form-label { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-dk); }
+  .form-input {
+    background: rgba(255,255,255,0.05); border: 1px solid var(--border-lt);
+    color: var(--cream); padding: 0.9rem 1.2rem;
+    font-family: 'Jost', sans-serif; font-size: 0.88rem; font-weight: 300;
+    outline: none; transition: border-color 0.2s, background 0.2s; width: 100%;
+  }
+  .form-input::placeholder { color: var(--muted-dk); }
+  .form-input:focus { border-color: var(--teal); background: rgba(46,196,160,0.04); }
+  .form-input option { background: var(--bg-2); color: var(--cream); }
+  .form-textarea { min-height: 120px; resize: vertical; }
+  .form-btn {
+    background: var(--teal-btn); border: 1px solid var(--teal-dk);
+    color: var(--teal); padding: 1.1rem 2.4rem;
+    font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 400;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.25s; align-self: flex-start;
+  }
+  .form-btn:hover { background: var(--teal-dk); }
+  .form-success {
+    display: none; color: var(--teal);
+    font-size: 0.85rem; letter-spacing: 0.08em;
+    padding: 1rem 0; border-top: 1px solid var(--border-lt);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--bg); border-top: 1px solid var(--border);
+    padding: 2.5rem 3rem; display: flex; justify-content: space-between; align-items: center;
+  }
+  .f-logo { font-weight: 400; letter-spacing: 0.28em; font-size: 0.76rem; text-transform: uppercase; color: var(--cream); }
+  .f-tags { display: flex; gap: 1.5rem; }
+  .f-tags span { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-dk); }
+  .f-copy { font-size: 0.7rem; color: var(--muted-dk); }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 960px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .hero { padding: 7rem 1.5rem 4rem; }
+    .hero-grid, .two-col { grid-template-columns: 1fr; gap: 3rem; }
+    .for-grid, .how-grid { grid-template-columns: 1fr; }
+    .prob-grid { grid-template-columns: 1fr 1fr; }
+    .svc-grid { grid-template-columns: 1fr 1fr; }
+    .pad { padding: 5rem 1.5rem; }
+    .contract-row { flex-direction: column; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.5rem; }
+    .f-tags { flex-wrap: wrap; justify-content: center; }
+  }
+  @media (max-width: 540px) {
+    .prob-grid, .svc-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MOBILE MENU OVERLAY -->
+<div class="menu-overlay" id="menuOverlay">
+  <nav class="menu-list">
+    <a href="#about" onclick="closeMenu()">About us</a>
+    <a href="#why" onclick="closeMenu()">Why BPR</a>
+    <a href="#for" onclick="closeMenu()">Who it's for</a>
+    <a href="#services" onclick="closeMenu()">What we do</a>
+    <a href="#how" onclick="closeMenu()">How it works</a>
+    <a href="#contact" onclick="closeMenu()">Contact</a>
+  </nav>
+  <div class="menu-divider"></div>
+  <div class="menu-cta-wrap">
+    <a href="#contact" class="btn-outline" onclick="closeMenu()">Book free consultation</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">BPR Consulting</a>
+  <div class="nav-links">
+    <a href="#about">About us</a>
+    <span class="sep">&middot;</span>
+    <a href="#why">Why BPR</a>
+    <span class="sep">&middot;</span>
+    <a href="#services">What we do</a>
+    <span class="sep">&middot;</span>
+    <a href="#how">How it works</a>
+    <span class="sep">&middot;</span>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav-right">
+    <a href="#contact" class="nav-cta">Book free consultation</a>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-kicker">Fractional &middot; Operational &middot; AI-Enabled</div>
+      <h1>Less complexity.<br><em>More impact.</em></h1>
+      <p class="hero-lead">We fix operations, hiring, and systems — without adding overhead.</p>
+      <p class="hero-sub">BPR Consulting steps in as your execution partner, building and running what your business actually needs to scale.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Book free consultation &rarr;</a>
+        <a href="#how" class="btn-ghost">How it works</a>
+      </div>
+    </div>
+    <div class="stats-col">
+      <div class="stat-card"><div class="stat-n">7+</div><div class="stat-l">Years delivering results</div></div>
+      <div class="stat-card"><div class="stat-n">85+</div><div class="stat-l">Satisfied clients</div></div>
+      <div class="stat-card"><div class="stat-n">600+</div><div class="stat-l">People recruited &amp; placed</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="hi">Fractional Operations</span><span>&middot;</span><span>Business Operations</span><span>&middot;</span>
+    <span class="hi">Operational Strategy</span><span>&middot;</span><span>Process Optimization</span><span>&middot;</span>
+    <span class="hi">Recruitment Strategy</span><span>&middot;</span><span>Talent Acquisition</span><span>&middot;</span>
+    <span class="hi">Fractional Recruitment</span><span>&middot;</span><span>Startup Consulting</span><span>&middot;</span>
+    <span class="hi">SME Growth</span><span>&middot;</span><span>AI Integrations</span><span>&middot;</span>
+    <span class="hi">AI-Native Operations</span><span>&middot;</span><span>Lean Operations</span><span>&middot;</span>
+    <span class="hi">Outsourcing Solutions</span><span>&middot;</span><span>Business Development</span><span>&middot;</span>
+    <span class="hi">Change Management</span><span>&middot;</span><span>Executive Support</span><span>&middot;</span>
+    <span class="hi">Fractional Operations</span><span>&middot;</span><span>Business Operations</span><span>&middot;</span>
+    <span class="hi">Operational Strategy</span><span>&middot;</span><span>Process Optimization</span><span>&middot;</span>
+    <span class="hi">Recruitment Strategy</span><span>&middot;</span><span>Talent Acquisition</span><span>&middot;</span>
+    <span class="hi">Fractional Recruitment</span><span>&middot;</span><span>Startup Consulting</span><span>&middot;</span>
+    <span class="hi">SME Growth</span><span>&middot;</span><span>AI Integrations</span><span>&middot;</span>
+    <span class="hi">AI-Native Operations</span><span>&middot;</span><span>Lean Operations</span><span>&middot;</span>
+    <span class="hi">Outsourcing Solutions</span><span>&middot;</span><span>Business Development</span><span>&middot;</span>
+    <span class="hi">Change Management</span><span>&middot;</span><span>Executive Support</span><span>&middot;</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="pad" id="about">
+  <div class="wrap">
+    <div class="two-col reveal">
+      <div>
+        <div class="s-label">About BPR Consulting</div>
+        <h2 class="h2">We run the ops.<br><em>You run the business.</em></h2>
+        <p class="body">Growing a business is hard. Operations shouldn't slow it down.</p>
+        <p class="body">BPR Consulting steps in as your fractional execution partner — bringing structure, clarity, and hands-on delivery across operations, hiring, and systems. <strong>We don't advise from the sidelines. We build, fix, and run what's needed.</strong></p>
+        <p class="body">Since 2019, we've supported founders and leadership teams across Benelux, Nordics, UK, and the Middle East — helping them scale without unnecessary complexity, overhead, or guesswork.</p>
+        <div class="tags">
+          <span class="tag">Strategy</span><span class="tag">Operations</span>
+          <span class="tag">Recruitment</span><span class="tag">AI-Enabled</span>
+          <span class="tag">Remote</span><span class="tag">Fractional</span>
+        </div>
+      </div>
+      <div>
+        <div class="about-card">
+          <div class="about-quote">"We don't advise from the sidelines. We build, fix, and run what's needed."</div>
+          <p style="font-size:0.86rem; color:var(--body-dk); line-height:1.8;">Every engagement starts with understanding your business. Then we step in and get things done — no unnecessary layers, no overcomplicating what works.</p>
+          <div class="regions">
+            <div class="region">Benelux</div>
+            <div class="region">Nordics</div>
+            <div class="region">United Kingdom</div>
+            <div class="region">Middle East</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY BPR -->
+<section class="pad" id="why" style="background:var(--bg-3); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="wrap">
+    <div class="two-col reveal">
+      <div>
+        <div class="s-label">Why BPR Consulting</div>
+        <h2 class="h2">We're not a<br><em>typical consultancy.</em></h2>
+        <p style="font-size:0.9rem; color:var(--body-dk); margin-bottom:2.5rem; line-height:1.7;">We're not here to produce reports and disappear. We're here to get things done.</p>
+        <div class="why-footer">Simple approach. Real outcomes.</div>
+      </div>
+      <div class="why-list">
+        <div class="why-item"><span class="why-dash">&mdash;</span><span class="why-text">We don't only advise <span>&mdash; we execute</span></span></div>
+        <div class="why-item"><span class="why-dash">&mdash;</span><span class="why-text">We don't overbuild <span>&mdash; we keep it lean</span></span></div>
+        <div class="why-item"><span class="why-dash">&mdash;</span><span class="why-text">We don't add layers <span>&mdash; we remove friction</span></span></div>
+        <div class="why-item"><span class="why-dash">&mdash;</span><span class="why-text">We don't sell AI <span>&mdash; we implement what works</span></span></div>
+        <div class="why-item"><span class="why-dash">&mdash;</span><span class="why-text">We don't disappear <span>&mdash; we stay accountable</span></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IT'S FOR -->
+<section class="pad" id="for" style="background:var(--bg-2); border-bottom:1px solid var(--border);">
+  <div class="wrap reveal">
+    <div class="s-label">Who it's for</div>
+    <h2 class="h2">Built for businesses<br><em>ready to grow smart.</em></h2>
+    <div class="for-grid">
+      <div class="for-card">
+        <div class="for-type">01 — Startups</div>
+        <div class="for-title">Building from<br>the ground up.</div>
+        <p class="for-desc">You're moving fast and need solid foundations — without the cost of a full team. We build the systems, hire the right people, and keep everything lean from day one.</p>
+        <span class="for-badge">Early-stage &amp; seed</span>
+      </div>
+      <div class="for-card">
+        <div class="for-type">02 — SMEs &amp; Scale-Ups</div>
+        <div class="for-title">Growing without<br>the chaos.</div>
+        <p class="for-desc">You have traction but your operations haven't kept up. We step in to simplify, fix, and scale your people and processes — so growth doesn't break what you've built.</p>
+        <span class="for-badge">Growth stage</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE PROBLEM -->
+<section class="pad" id="problem" style="background:var(--bg-2); border-bottom:1px solid var(--border);">
+  <div class="wrap reveal">
+    <div class="s-label">The problem</div>
+    <h2 class="h2">Complexity is<br><em>the real bottleneck.</em></h2>
+    <div class="prob-grid">
+      <div class="prob-card">
+        <div class="prob-num">01 — Complexity</div>
+        <div class="prob-title">More tools,<br>less clarity.</div>
+        <p class="prob-desc">Adding software and processes doesn't create efficiency. It creates noise that slows everything down.</p>
+      </div>
+      <div class="prob-card">
+        <div class="prob-num">02 — Overhead</div>
+        <div class="prob-title">More hires,<br>less agility.</div>
+        <p class="prob-desc">Building a full in-house team too early adds cost without the flexibility a growing business actually needs.</p>
+      </div>
+      <div class="prob-card">
+        <div class="prob-num">03 — Misalignment</div>
+        <div class="prob-title">More process,<br>less momentum.</div>
+        <p class="prob-desc">When strategy, people, and operations aren't connected, growth stalls — no matter how hard the team works.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="pad" id="services" style="background:var(--bg-3); border-bottom:1px solid var(--border);">
+  <div class="wrap reveal">
+    <div class="s-label">What we do</div>
+    <h2 class="h2">Where we<br><em>take ownership.</em></h2>
+    <div class="svc-grid">
+      <div class="svc-card">
+        <div class="svc-num">01</div>
+        <div class="svc-title">Strategy</div>
+        <p class="svc-desc">We help you make the right decisions early — on structure, growth, and direction — before time or money is wasted going the wrong way.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-num">02</div>
+        <div class="svc-title">Operations</div>
+        <p class="svc-desc">We build and run lean, scalable operations — from scratch or on top of what you already have. No unnecessary layers. No overengineering.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-num">03</div>
+        <div class="svc-title">Recruitment</div>
+        <p class="svc-desc">We build your team with the right people for your stage and culture — not just filling roles, but setting you up to scale. Benelux, Nordics, UK &amp; Middle East.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-num">04</div>
+        <div class="svc-title">AI</div>
+        <p class="svc-desc">We bring in AI where it actually saves time and improves how things run — built into your operations from the start, not added as a trend.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="pad" id="how" style="background:var(--bg-2); border-bottom:1px solid var(--border);">
+  <div class="wrap reveal">
+    <div class="s-label">How it works</div>
+    <h2 class="h2">Simple process.<br><em>Fast results.</em></h2>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-step">01</div>
+        <div class="how-title">Free consultation</div>
+        <p class="how-desc">We start with a free call to understand your business, your challenges, and where you need support. No commitment — just an honest conversation.</p>
+        <div class="how-tag">Book your call</div>
+      </div>
+      <div class="how-card">
+        <div class="how-step">02</div>
+        <div class="how-title">Proposal within 24h</div>
+        <p class="how-desc">Within 24 hours we send a clear, tailored proposal — outlining exactly what we'd do, how, and on what terms. No generic templates.</p>
+        <div class="how-tag">Fast turnaround</div>
+      </div>
+      <div class="how-card">
+        <div class="how-step">03</div>
+        <div class="how-title">We get to work</div>
+        <p class="how-desc">Once aligned, we start. Fully remote, flexible, and committed — on the terms that fit your business best.</p>
+        <div class="how-tag">Remote &amp; flexible</div>
+      </div>
+    </div>
+    <div class="contract-row">
+      <div class="contract-pill">Hourly</div>
+      <div class="contract-pill">Daily Rate</div>
+      <div class="contract-pill">Project-Based</div>
+    </div>
+    <div class="tz-banner">
+      <div class="tz-icon">&#127758;</div>
+      <div class="tz-text">We work remotely within <strong>CET business hours</strong> — covering <strong>Benelux, Nordics, UK</strong> and the <strong>Middle East</strong>. You always know when we're available.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="cta-band" id="contact">
+  <div style="max-width:700px; margin:0 auto; position:relative; z-index:1;">
+    <div class="s-label" style="justify-content:center;">Contact</div>
+    <h2 class="cta-h2">Ready to run things <em>properly?</em></h2>
+    <p style="color:var(--muted-dk); font-size:0.92rem; margin-bottom:3rem;">Book an initial free consultation — get a clear, tailored plan within 24 hours.</p>
+
+    <form class="contact-form" id="contactForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="name">Your name</label>
+          <input type="text" id="name" name="name" class="form-input" placeholder="Jane Smith" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="company">Company</label>
+          <input type="text" id="company" name="company" class="form-input" placeholder="Acme Ltd">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="email">Email address</label>
+          <input type="email" id="email" name="email" class="form-input" placeholder="jane@company.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="service">What do you need help with?</label>
+          <select id="service" name="service" class="form-input">
+            <option value="" disabled selected>Select a service</option>
+            <option>Strategy</option>
+            <option>Operations</option>
+            <option>Recruitment</option>
+            <option>AI Integration</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="message">Tell us about your business</label>
+        <textarea id="message" name="message" class="form-input form-textarea" placeholder="A few lines about your business and what you're trying to solve..." required></textarea>
+      </div>
+      <button type="submit" class="form-btn">Book free consultation &rarr;</button>
+      <div class="form-success" id="formSuccess">Thank you — we'll be in touch within 24 hours.</div>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">BPR Consulting</div>
+  <div class="f-tags">
+    <span>Strategy</span><span>Operations</span><span>Recruitment</span><span>AI-Enabled</span>
+  </div>
+  <div class="f-copy">&copy; 2026 BPR Consulting</div>
+</footer>
+
+<script>
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('menuOverlay').classList.toggle('open');
+    document.getElementById('hamburger').classList.toggle('open');
+    document.body.style.overflow = document.getElementById('menuOverlay').classList.contains('open') ? 'hidden' : '';
+  }
+  function closeMenu() {
+    document.getElementById('menuOverlay').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Contact form
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('formSuccess').style.display = 'block';
+    this.querySelector('.form-btn').style.display = 'none';
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  reveals.forEach(function(el) { observer.observe(el); });
+
+  // Nav background on scroll
+  window.addEventListener('scroll', function() {
+    var nav = document.querySelector('nav:not(.menu-list)');
+    if (!nav) return;
+    if (window.scrollY > 50) {
+      nav.style.background = 'rgba(10,15,13,0.99)';
+    } else {
+      nav.style.background = 'rgba(10,15,13,0.95)';
+    }
+  });
+</script>
+</body>
+</html>
